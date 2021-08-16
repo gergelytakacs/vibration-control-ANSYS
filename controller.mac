@@ -1,0 +1,43 @@
+! ====================================================
+! Readout, Observer, Controller, Actuator
+! ====================================================
+
+! Sensor (Position readout)---------------------------
+*GET,y,NODE,351,U,Z 			! Get the nodal position
+y=y*1000						! Convert to mm
+
+! State observer--------------------------------------
+! x=A*x+B*u+M*(y-C*x)
+
+*MOPER,t1,A,MULT,x		!t1=A*x  
+*VFACT,u				!Scale factor applied to results
+*VFUN,t2,COPY,B			!t2=B.*u
+*MOPER,t3,C,MULT,x	 	!t3=C*x		
+t3(1,1)=y-t3(1,1)       !t3=(y-C*x)
+t3B=t3(1,1)				!Convert back from array to scalar
+*VFACT,t3B	 			!Scale factor applied to results
+*VFUN,t4,COPY,M			!t4=M.*t3
+*VOPER,t4,t2,ADD,t4		!t3=B*u+M*(y-C*x)
+*VOPER,x,t1,ADD,t4		!t3=A*x+B*u+M*(y-C*x)
+
+! Save the states for diagnostics
+x1=x(1,1) 		 	! Convert back from array to scalar
+x2=x(2,1)			! Convert back from array to scalar
+
+*IF,ContOn,EQ,1,THEN
+! Controller------------------------------------------
+	!u=K*x
+	*MOPER,ut,K,MULT,x	! u=K*x, the LQ controller  
+	u=-ut(1,1) 		 	! Convert back from array to scalar
+! Handling U extremes----------------------------------
+	*IF,u,LT,uL,THEN 	! If case to decide wheter control difference is lower than limit 
+		u=uL  		 	! Set the control difference to the low limit 
+	*ELSEIF,u,GT,uH  	! Elseif case to decide wheter the control difference is higher than limit 
+		u=uH  	 	 	! Set the control difference to the high limit 
+	*ENDIF   		 	! End of if-then-elseif construct 
+! Actuator--------------------------------------------
+	d,p1,VOLT,u,0 	 !P1
+	d,p2,VOLT,u,0 	 !P2
+*ENDIF
+ 
+ 

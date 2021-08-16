@@ -1,0 +1,36 @@
+! ====================================================
+! Solid model
+! ====================================================
+! Beam
+BLC4,0,0,Lb,Wb,Hb ! Width of the aluminum beam 
+
+! Divinding the base aluminum beam for better mesh distribution
+WPROTA,,-90,
+WPOFFS,,,W1
+VSBW,ALL
+WPOFFS,,,W
+VSBW,ALL
+WPAVE,0,0,0,
+WPROTA,,,90
+WPOFFS,,,L1
+VSBW,ALL
+WPOFFS,,,L
+VSBW,ALL
+WPOFFS,,,L2-L1-L
+VSBW,ALL
+WPOFFS,,,L
+VSBW,ALL
+WPOFFS,,,L3-L2-L
+VSBW,ALL
+WPOFFS,,,L
+VSBW,ALL 
+WPCSYS,,0
+
+
+! Top piezos
+BLOCK,L1,L1+L,w1,w1+W,Hb,Hb+H          ! Create the active QP16 piezo wafer P1
+BLOCK,L2,L2+L,w2,w2+W,Hb,Hb+H          ! Create the active QP16 piezo wafer P2
+BLOCK,L3,L3+L,w3,w3+W,Hb,Hb+H          ! Create the active QP16 piezo wafer P3
+
+! Bottom piezos
+BLOCK,L4,L4+L,w4,w4+W,0,-H         ! Create the active QP16 piezo wafer P4

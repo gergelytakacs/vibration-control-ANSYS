@@ -1,0 +1,21 @@
+/SOLU 
+ANTYPE,4
+TRNOPT,FULL,,DAMP 
+LUMPM,0 
+OUTRES,ALL,ALL
+
+DELTIM,Tres			! Specifies the time step sizes
+TINTP,,0.25,0.5,0.5
+
+
+!At the starting point
+TIME,Tstep			! Sets time to Tstep seconds
+F,350,FZ,frce   
+KBC,1				! Ramped load step
+SOLVE
+FDELE,350,ALL  		! Delete the load at the end
+
+*GET,y,NODE,351,U,Z 
+y=y*1000
+*VWRITE,tstep,y,u,0,0
+%0.0e,%0.0f,%0.0f,%0.0f,%0.0f,

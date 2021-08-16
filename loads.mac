@@ -1,0 +1,83 @@
+!----------------------
+!Clamp left end of beam
+!----------------------
+nsel,s,loc,x,0                  ! Clamp left end of bimorph
+d,all,ux,0,,,,uy,uz		! Defines DOF constraints, clamp the end
+nsel,all
+
+!----------------------
+!Define upper electrodes on piezos
+!----------------------
+!P1
+asel,s,loc,z,Hb+H
+asel,r,loc,x,L1,L1+L
+nsla,s,1
+*get,p1,node,0,num,min
+cp,1,volt,all
+d,p1,VOLT,0,0
+allsel
+
+!P2
+asel,s,loc,z,Hb+H
+asel,r,loc,x,L2,L2+L
+nsla,s,1
+*get,p2,node,0,num,min
+cp,2,volt,all
+d,p2,VOLT,0,0
+allsel
+
+!P3
+asel,s,loc,z,Hb+H
+asel,r,loc,x,L3,L3+L
+nsla,s,1
+*get,p3,node,0,num,min
+!cp,3,volt,all
+d,p3,VOLT,0,0
+allsel
+
+!P4
+asel,s,loc,z,-H
+asel,r,loc,x,L1,L1+L
+nsla,s,1
+*get,p4,node,0,num,min
+!cp,4,volt,all
+d,p4,VOLT,0,0
+allsel
+
+!----------------------
+!Define lower electrodes on piezos (bonded side)
+!----------------------
+!P1
+asel,s,loc,z,Hb
+asel,r,loc,x,L1,L1+L
+nsla,s,1
+d,all,volt,0,0                    ! Ground bottom electrode,
+nsel,all
+
+!P2
+asel,s,loc,z,Hb
+asel,r,loc,x,L2,L2+L
+nsla,s,1
+d,all,volt,0,0                    ! Ground bottom electrode,
+nsel,all
+
+!P3
+asel,s,loc,z,Hb
+asel,r,loc,x,L3,L3+L
+nsla,s,1
+d,all,volt,0,0                    ! Ground bottom electrode,
+nsel,all
+
+!P4
+asel,s,loc,z,
+asel,r,loc,x,L1,L1+L
+nsla,s,1
+d,all,volt,0,0                    ! Ground bottom electrode,
+nsel,all
+
+!----------------------
+!Define gravitational field
+!----------------------
+acel,0,-9.81,0
+
+fini

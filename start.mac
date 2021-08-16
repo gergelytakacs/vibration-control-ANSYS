@@ -1,0 +1,38 @@
+FINISH
+/CLEAR
+
+/title, Controlled smart structure - Takacs G.
+/nopr								! Supresses extended interpreted data input
+/com, 								! Places comments in the output
+/FILNAME,beam_control,0				! This sets the jobname to 'beam_control' 
+/CONFIG,NRES,3000 
+
+/PREP7
+SHPP,SILENT,ON 						!Shape checking in silent mode
+SHPP,MODIFY,1,40
+*CFOPEN,results,csv
+
+*USE,parameters.mac			! Load all the parameters
+*USE,geometry.mac			! Create model geometry
+*USE,meshing.mac			! Define materials and mesh the model
+*USE,loads.mac				! Defines clamp and other loads
+*USE,trans.mac		        ! Initializes solution, defines an initial condition
+
+*DO,t,2*Tstep,Tstop,Tstep
+	TIME,t  				! Sets time to Tstop second
+	*USE,controller.mac
+	*VWRITE,t,y,u,x1,x2
+	%0.0e,%0.0f,%0.0f,%0.0f,%0.0f
+	SOLVE
+*ENDDO
+
+FINISH  
+
+*CFCLOSE
+*USE,process.mac
+
+
+
+
+ 
+

@@ -1,0 +1,7 @@
+*DIM,t1,ARRAY,2,1,1, , ,  
+*DIM,t2,ARRAY,2,1,1, , ,  
+t1(1,1)=1
+t1(2,1)=2
+
+*VFACT,2 			       !Scale factor applied to results
+*VFUN,t2,COPY,t1			!t4=M.*t3

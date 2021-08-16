@@ -1,0 +1,56 @@
+
+
+
+! ====================================================
+! Meshed model
+! ====================================================
+! ====================================================
+! Materials and element types
+! ====================================================
+! Defining elements and materials:
+! PZT-------------------------------------------------
+et,1,SOLID5,3                   ! 3-D piezoelectric element
+MP,DENS,1,pidns
+MP,PERX,1,ept11					! Permittivity at constant stress
+MP,PERY,1,ept22
+MP,PERZ,1,ept33
+tb,ANEL,1,,,1                   ! Assembling elastic compliance matrix
+tbda,1,s11,s12,s13
+tbda,7,s22,s23
+tbda,12,s33
+tbda,16,s66
+tbda,19,s55
+tbda,21,s44
+tb,PIEZ,1,,,1                    ! Piezoelectric strain matrix
+tbda,3,d31
+tbda,6,d33
+tbda,9,d32
+tbda,14,d24
+tbda,16,d16
+
+! Al Beam--------------------------------------------
+ET,2,SOLID5,2  
+MP,EX,2,EXY 
+MP,PRXY,2,POIS 
+MP,DENS,2,aldns		        ! Density of Al Beam
+
+! Assigning mesh size and materials, mesh process initiation
+! Global
+ESIZE,ebig
+
+VSEL,S,LOC,Z,0,Hb ! Selecting beam
+VATT,2,1,2,0 ! Assigning beam material properties
+VSEL,S,LOC,Z,-Ha,-Ha-H !Selecting piezos
+VSEL,A,LOC,Z,Hb+Ha,Hb+Ha+H  
+VATT,1,1,1,0  !Assigning piezo material props
+ALLSEL
+VPLOT
+MSHAPE,0,3D
+MSHKEY,1
+VMESH,ALL
+
+!----------------------
+!Go and merge some nodes (eg. use glue layers of materials together)
+!----------------------
+nsel,all
+nummrg,node,1e-5

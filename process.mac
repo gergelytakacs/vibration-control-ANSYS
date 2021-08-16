@@ -1,0 +1,7 @@
+/POST26 			! Enter time history
+FILE,'beam_control','rst','.'   
+NSOL,2,351,U,Z,UZ_4 
+STORE,MERGE 
+XVAR,1  
+PLVAR,2
+FINISH

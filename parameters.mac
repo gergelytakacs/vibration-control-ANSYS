@@ -1,0 +1,126 @@
+ebig=8e-3			   	        ! Global element size
+frce=2.4						! Force
+
+!Timing
+Tstep=0.01
+Tstop=30
+Tres=0.01
+
+!Damping
+ALPHAD,0
+BETAD,0.00015
+
+!Stiffness - aluminum
+EXY=68e+09		! Young's modulus  (Al 70GPa, Dural(R)=73, 68.72e+09)
+
+!Control
+ContOn=1					! Controller ON=1, OFF=0;
+uH=120						! Controller saturation
+
+uL=-uH
+u=0							! Initialize parameter
+! ====================================================
+! State-Space Model
+! ====================================================
+*DIM,A,ARRAY,2,2,1, , , 
+*SET,A(1,1,1) , 0.867074264700783  
+*SET,A(1,2,1) , 1.118487994649831 
+*SET,A(2,1,1) , -0.214184972531195   
+*SET,A(2,2,1) , 0.869746240894636
+
+*DIM,B,ARRAY,2,1,1, , , 
+*SET,B(1,1,1) , 0.933601028678616E-3   
+*SET,B(2,1,1) , 0.530974425107969E-3   
+
+*DIM,C,ARRAY,1,2,1, , , 
+*SET,C(1,1,1) , -0.552612993066737   
+*SET,C(1,2,1) ,  0.705187130687643  
+
+*DIM,x,ARRAY,2,1,1, , , 
+
+! LQ Controller Gain------------------------------------
+*DIM,K,ARRAY,1,2,1, , , 
+*SET,K(1,1,1) ,  12.967150796211348  
+*SET,K(1,2,1) ,  125.5047671231475 
+
+! Kalman Filter Innovation Gain-------------------------
+*DIM,M,ARRAY,2,1,1, , , 
+*SET,M(1,1,1) ,   -4.336938056233941  
+*SET,M(2,1,1) ,   -0.354380105600932
+
+! Temporary variables-----------------------------------
+*DIM,t1,ARRAY,2,1,1, , ,  
+*DIM,t2,ARRAY,2,1,1, , , 
+*DIM,t3,ARRAY,1,1,1, , , 
+*DIM,t4,ARRAY,2,1,1, , , 
+*DIM,ut,ARRAY,1,1,1, , , 
+
+
+! ====================================================
+! Define problem parameters - PZT
+! ====================================================
+!   - PZT Geometry (All PZTs QP16n)
+L=44e-3                         ! Length, m
+H=0.25e-3                       ! Thickness, m
+W=20e-3		                    ! Width,m
+
+!   - Material properties for PVDF 
+
+s11=16.4e-12
+s22=s11
+s12=-5.74e-12
+s13=-7.22e-12
+s23=s13
+s33=18.8e-12
+s44=47.5e-12
+s55=47.5e-12
+s66=44.3e-12
+
+
+pidns=7700	                 ! Density of PZT
+d31=-179e-12                     ! Piezoelectric strain coefficients, C/N
+d32=-179e-12			 ! Manufacturers data combined with PZT5A mat props
+d33=350e-12
+d24=584e-12
+d16=584e-12
+
+ept11=1730                        ! Relative permittivity at constant stress 
+ept22=1730
+ept33=1700
+
+! ====================================================
+! Define problem parameters - BEAM
+! ====================================================
+
+!   - Support Beam Thickness and material props
+Lb=550e-3			! Support Length
+Hb=3e-3				! Support Thickness
+Wb=40e-3			! Support Width
+
+!   - Material properties for Aluminium
+POIS=0.33			! Poisson's ration (Al) (0.35)
+aldns=2691.7		! Density of Aluminium. (Al=2700, Dural(R)=2800)
+
+! ====================================================
+! Define problem parameters - PZT Placement
+! ====================================================
+
+!   - Top PZT 1 (Starting from the clamped end)
+L1=14e-3	   		! Starting point of PZT from the left edge
+W1=10e-3			! ((in reality 9)Starting point of piezo (Measured from the lower side, when clamped at the left end)
+
+!   - Top PZT 2 (Starting from the clamped end)
+L2=90e-3	     	! Starting point of PZT from the left edge
+W2=10e-3			! Starting point of piezo (Measured from the lower side, when clamped at the left end)
+
+
+!   - Top PZT 3 (Starting from the clamped end)
+L3=322e-3	     	! Starting point of PZT from the left edge
+W3=10e-3			! Starting point of piezo (Measured from the lower side, when clamped at the left end)
+
+!   - Bottom PZT 1 (Starting from the clamped end)
+L4=14e-3	     	! Starting point of PZT from the left edge
+W4=10e-3			!(in reality 9)! Starting point of piezo (Measured from the lower side, when clamped at the left end)
+
+
+
