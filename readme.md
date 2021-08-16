@@ -12,7 +12,7 @@ This code collection implements the active vibration control of a cantilever bea
 - The example has been verified experimentall, see the "Further reading" section
 
 ## Usage
-Launch the `start.mac` macro in your ANSYS installation. Comment the control part to compare with open-loop behavior.
+Launch the `start.mac` macro in your ANSYS installation. Comment the control part to compare with open-loop behavior. Results will be saved to the `results.csv' file. The response is plotted in ANSYS, but the data can be also visualized in MATLAB by launching the `process.m' script. Code functionality last verified in ANSYS Mechanical APDL 19.0.
 
 ## Further reading
 - TAKÁCS, Gergely - ROHAĽ-ILKIV, Boris. Direct closed-loop active vibration control system prototyping in ANSYS. In NOVEM 2012. Noise and vibration: Emerging Methods : proceedings of the conference. Sorrento, Italy, 1.-4. 4. 2012. Napoli : Universita degli Studi di Napoli "Federico II", 2012, s.001-1 - 001-12. ISBN 9788890648403.
