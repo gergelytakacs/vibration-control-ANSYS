@@ -14,6 +14,9 @@ This code collection implements the active vibration control of a cantilever bea
 ## Usage
 Launch the `start.mac` macro in your ANSYS installation. Comment the control part to compare with open-loop behavior. The beam tip deformation is plotted in ANSYS, and the responsce can also be visualized as an animation. Results will be saved to the `results.csv' file, then the data can be plotted in MATLAB by launching the `process.m' script. The 'control.m' script computes LQ gain and illustrates the estimatior in action. The file 'experiment.mat' contains experimental measurements. Code functionality last verified in ANSYS Mechanical APDL 19.0.
 
+## Screenshots
+![Tip deflection comparison](comparison.png)
+
 ## Further reading
 - TAKÁCS, Gergely - ROHAĽ-ILKIV, Boris. Direct closed-loop active vibration control system prototyping in ANSYS. In NOVEM 2012. Noise and vibration: Emerging Methods : proceedings of the conference. Sorrento, Italy, 1.-4. 4. 2012. Napoli : Universita degli Studi di Napoli "Federico II", 2012, s.001-1 - 001-12. ISBN 9788890648403.
 
