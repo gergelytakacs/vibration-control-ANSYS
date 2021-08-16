@@ -1,9 +1,13 @@
+% Plots and compares ANSYS simulation and
+% experimental results.
+%
+% Prof. Gergely Takacs, PhD.
+% http://www.gergelytakacs.com
+
 load n4s2s;
 A=n4s2s.a;
 B=n4s2s.b;
 C=n4s2s.c;
-
-
 
 sys=ss(A,B,C,0,0.01,'inputname','u','outputname','y')
 
@@ -40,3 +44,7 @@ plot(x(1,:),x(2,:),'.-')
 hold on
 plot(xe(1,:),xe(2,:),'gx-')
 hold on
+xlabel('x_1')
+ylabel('x_2')
+legend('Simulation','Estimate')
+grid on
